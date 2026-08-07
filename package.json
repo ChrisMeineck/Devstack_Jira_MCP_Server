@@ -1,0 +1,24 @@
+{
+  "name": "devstack-jira-conf-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP Server for Devstack Jira and Confluence (on-premises)",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "devstack-jira-conf-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch",
+    "test": "npm run build && node test-guardrails.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.6.3"
+  }
+}
