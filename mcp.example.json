@@ -1,0 +1,9 @@
+{
+  "servers": {
+    "devstack-jira-mcp": {
+      "url": "http://localhost:8766/mcp",
+      "type": "http"
+    }
+  },
+  "inputs": []
+}

@@ -1,0 +1,29 @@
+[project]
+name = "devstack-jira-mcp"
+version = "1.0.0"
+description = "MCP-Server fuer die VW-Group-Jira-Instanz devstack.vwgroup.com (PAT-Auth, GSEP/SRG-Auswertungen)"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+extend-exclude = [".venv", "venv", "__pycache__"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B"]
+ignore = [
+    "B008",  # FastAPI-Query()/Path() als Default-Argument ist idiomatisch
+    "B904",  # raise ... from exc in HTTPException-Wrappern bewusst nicht erzwungen
+]
+
+[tool.ruff.lint.per-file-ignores]
+"mcp_server.py" = ["E402"]  # truststore muss vor requests/jira injiziert werden
+"tests/conftest.py" = ["E402"]  # Env-Variablen muessen vor dem Import von config gesetzt sein
+# Lange Query-/Tool-Beschreibungen sind fuer Copilot gewollt; `l` = Issue-Link in Comprehensions
+"routes/gsep.py" = ["E501", "E741"]
+"routes/srg.py" = ["E501"]

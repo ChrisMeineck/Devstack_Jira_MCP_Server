@@ -1,0 +1,9 @@
+fastapi>=0.104.0
+fastapi-mcp>=0.1.0
+# fastapi-mcp ist (Stand 0.4.0) nicht mit dem mcp-SDK 2.x kompatibel
+mcp>=1.8,<2
+uvicorn[standard]>=0.24.0
+jira>=3.5.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+truststore>=0.9.0

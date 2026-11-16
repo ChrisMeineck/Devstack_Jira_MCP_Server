@@ -1,0 +1,12 @@
+* text=auto
+
+# Windows-Skripte brauchen CRLF, sonst bricht cmd.exe bei Labels/goto
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.txt text eol=lf

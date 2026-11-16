@@ -1,0 +1,25 @@
+# Secrets / lokale Konfiguration (PAT!)
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Marker von start-mcp.bat/.ps1
+.deps-installed
+
+# Editor / Backups / Logs
+.vscode/
+.idea/
+*.bak
+*.bak_*
+*.log
