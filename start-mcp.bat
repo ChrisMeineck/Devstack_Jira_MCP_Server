@@ -4,18 +4,12 @@ setlocal enabledelayedexpansion
 echo === devstack-jira-mcp starten ===
 cd /d "%~dp0"
 
-REM Python-Detektion: bevorzugt python_, dann py, dann python
+REM Python-Detektion: bevorzugt den py-Launcher, sonst python aus dem PATH
 set PYTHON_CMD=
 
-python_ --version >nul 2>&1
+py -3 --version >nul 2>&1
 if %errorlevel% equ 0 (
-    set PYTHON_CMD=python_
-    goto :found
-)
-
-py --version >nul 2>&1
-if %errorlevel% equ 0 (
-    set PYTHON_CMD=py
+    set PYTHON_CMD=py -3
     goto :found
 )
 
@@ -25,7 +19,7 @@ if %errorlevel% equ 0 (
     goto :found
 )
 
-echo [FEHLER] Python nicht gefunden. Bitte python_, py oder python im PATH bereitstellen.
+echo [FEHLER] Python nicht gefunden. Bitte Python 3.10+ installieren (py-Launcher oder python im PATH).
 pause
 exit /b 1
 
@@ -33,7 +27,14 @@ exit /b 1
 echo Python-Befehl: %PYTHON_CMD%
 %PYTHON_CMD% --version
 
-REM Dependencies idempotent installieren (global, kein venv)
+%PYTHON_CMD% -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)"
+if errorlevel 1 (
+    echo [FEHLER] Python 3.10 oder neuer wird benoetigt.
+    pause
+    exit /b 1
+)
+
+REM Dependencies idempotent installieren (kein venv)
 if not exist ".deps-installed" (
     echo Installiere Abhaengigkeiten aus requirements.txt ...
     %PYTHON_CMD% -m pip install --disable-pip-version-check -r requirements.txt

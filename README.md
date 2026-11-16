@@ -1,19 +1,19 @@
 # devstack-jira-mcp
 
 Ein **Model Context Protocol Server** fuer die VW-Group-Jira-Instanz
-<https://devstack.vwgroup.com/jira> (z.B. fuer Projekt **PPSE**). Auth nur per
+<https://devstack.vwgroup.com/jira> (z.B. fuer die Projekte **GSEP** und **PPSE**). Auth nur per
 Personal Access Token. Laeuft Windows-nativ ohne Docker und ohne venv.
 
 ## Highlights
 
 - **Nur PAT** – kein Zertifikat, kein UAC, kein Proxy-Setup.
-- **Kein Docker, kein venv** – globale Python-Installation, `python_` bevorzugt.
+- **Kein Docker, kein venv** – Standard-Python-Installation (`py`-Launcher oder `python`).
 - **Doppelklick-Start:** `start-mcp.bat`.
 - **Klare Standard-Tools** fuer Copilot/Claude: Issues, Search, Comments, Attachments.
 
 ## Voraussetzungen
 
-- Python 3.10+ (`python_`, `py` oder `python` im PATH)
+- Python 3.10+ (`py`-Launcher oder `python` im PATH, z.B. aus dem Porsche Software-Center oder python.org)
 - Personal Access Token fuer devstack.vwgroup.com
   ([Anleitung bei VW](https://devstack.vwgroup.com/jira/secure/ViewProfile.jspa))
 - Netzwerk-Zugriff auf <https://devstack.vwgroup.com/jira>
@@ -24,9 +24,14 @@ Personal Access Token. Laeuft Windows-nativ ohne Docker und ohne venv.
 git clone https://github.com/ChrisMeineck/Devstack_Jira_MCP_Server.git devstack-jira-mcp
 cd devstack-jira-mcp
 copy .env.example .env
-REM .env oeffnen und JIRA_PAT eintragen (fuer GSEP-Auswertungen: JIRA_DEFAULT_PROJECT_KEY=GSEP)
+REM .env oeffnen und JIRA_PAT eintragen
 start-mcp.bat
 ```
+
+Der Server kann auf **alle** Projekte zugreifen, fuer die der PAT-Inhaber in devstack-Jira
+berechtigt ist (z.B. GSEP und PPSE) – das Projekt wird je Anfrage per JQL bzw. `project_key`
+gewaehlt. `JIRA_DEFAULT_PROJECT_KEY` ist nur der Vorschlag fuer Copilot bei vagen Anfragen
+und der Default beim Anlegen neuer Tickets.
 
 Beim ersten Start werden die Abhaengigkeiten aus `requirements.txt` per `pip` installiert
 (Marker-Datei `.deps-installed`; zum erneuten Installieren nach einem `git pull` mit
